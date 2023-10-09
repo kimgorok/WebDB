@@ -1,0 +1,72 @@
+var http = require("http");
+var fs = require("fs");
+
+var urlm = require("url");
+
+// createServer는 이벤트 리스너의 기능을 함
+// 어떤 이벤트가 발생하면 그 이벤트에 맞는
+// 동작을 실행시키는 역할. 메서드임 메서드는 뒤에 ()가 있음
+
+// 웹 요청이 들어오면 콜백함수가 실행됨
+var app = http.createServer(function (req, res) {
+  var _url = req.url;
+  // 사용자가 요청한 URL = 브라우저에 입력한 URL
+
+  // 반환된 객체에 query라는 속성이있음
+  // url에서 query string만 추출해서 query를 객체 형태로 저장
+  var queryData = urlm.parse(_url, true).query;
+  var title = queryData.id;
+  /*
+   var path = urlm.parse(_url, true).path;
+   var pathname = urlm.parse(_url, true).pathname;
+   console.log("요청받은 url : " + _url);
+   console.log(queryData);
+   console.log(path);
+   console.log(pathname);
+  */
+
+  // req객체에 저장된 정보엔 사용자의 주소가 있을 수 있음
+
+  // url 요청에따라서 적합한 일을 하는 url분류기
+  if (req.url == "/") {
+    title = "Welcome";
+    // _url = "/index.html";
+  }
+
+  if (req.url == "/favicon.ico") {
+    return res.writeHead(404);
+  }
+
+  res.writeHead(200);
+  var template = `
+  <!doctype html>
+<html>
+<head>
+  <title>WEB1 - ${title}</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1><a href="/">WEB</a></h1>
+  <ol>
+    <li><a href="/?id=HTML">HTML</a></li>
+    <li><a href="/?id=CSS">CSS</a></li>
+    <li><a href="/?id=JavaScript">JavaScript</a></li>
+  </ol>
+  <h2>${title}</h2>
+  <p>The World Wide Web (abbreviated WWW or the Web) is an information space where documents and other web resources are identified by Uniform Resource Locators (URLs), interlinked by hypertext links, and can be accessed via the Internet.[1] English scientist Tim Berners-Lee invented the World Wide Web in 1989. He wrote the first web browser computer program in 1990 while employed at CERN in Switzerland.[2][3] The Web browser was released outside of CERN in 1991, first to other research institutions starting in January 1991 and to the general public on the Internet in August 1991.
+  </p>
+</body>
+</html>
+  `;
+
+  // res.end(fs.readFileSync(__dirname + _url));
+  res.end(template);
+});
+
+// createServer가 객체를 반환함 << app
+
+// app의 메서드가 이벤트 루프, 이벤트를 기다리는 기능
+app.listen(3000);
+
+// res는 콜백함수가 만들어서 보내줘야 하는 것
+// res는 서버쪽에서 브라우저에게

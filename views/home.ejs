@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WEB1</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <h1><a href="/">WEB</a></h1>
+    <ol type="1">
+      <% var i = 0; while(i < list.length) { %>
+      <li><a href="/page/<%=list[i].id%>"><%=list[i].title%></a></li>
+      <% i += 1 } %>
+    </ol>
+    <%- control%> <%- body%>
+  </body>
+</html>
