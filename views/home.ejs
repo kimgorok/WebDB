@@ -1,19 +1,20 @@
-<!-- 201935250 김현중 -->
-
 <!DOCTYPE html>
 <html>
   <head>
     <title>WEB1</title>
     <meta charset="utf-8" />
     <link rel="icon" href="data:," />
+    <title><%=title%></title>
   </head>
+
   <body>
-    <h1><a href="/">WEB</a></h1>
-    <a href="/author">author</a>
+    <%-lg%>
+    <h1><a href="/"><%=title%></a></h1>
+    <a href="/author">저자관리</a>
 
     <ol type="1">
       <% var i = 0; while(i < list.length) { %>
-      <li><a href="/author/page/<%=list[i].id%>"><%=list[i].name%></a></li>
+      <li><a href="/page/<%=list[i].id%>"><%=list[i].title%></a></li>
       <% i += 1 } %>
     </ol>
     <%- control%> <%- body%>
